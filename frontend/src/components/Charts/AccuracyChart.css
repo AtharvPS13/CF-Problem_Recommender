@@ -1,0 +1,25 @@
+.custom-tooltip {
+    padding: 8px;
+    margin: 0px;
+    background: #000;
+    border-radius: 7px;
+    color: white;
+    opacity: 83%;
+}
+.custom-tooltip p {
+    padding: 0px;
+    margin: 0px;
+}
+.Accepted {
+    color: rgb(84, 222, 84);
+}
+.Wrong {
+    color: rgb(201, 55, 55);
+}
+
+.bar-chart {
+    display: flex;
+    justify-content: center;
+    
+}
+
