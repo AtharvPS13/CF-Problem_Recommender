@@ -29,7 +29,7 @@ function AccuracyChart() {
   const [data,setData] = useState([])
 
   useEffect(()=>{
-    axios.get("http://localhost:8000/api/rating-accuracy")
+    axios.get("https://cf-problem-recommender.onrender.com/api/rating-accuracy")
       .then(response=>{
         setData(response.data)
         console.log("Accuracy", response.data); 
