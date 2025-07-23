@@ -1,7 +1,6 @@
 import pandas as pd
 from collections import defaultdict
 from sklearn.ensemble import RandomForestClassifier
-import joblib
 
 import requests
 from collections import defaultdict

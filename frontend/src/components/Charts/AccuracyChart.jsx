@@ -1,8 +1,9 @@
 import React from 'react'
-import {BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,Legend} from 'recharts';
+import {BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,Legend,Cell} from 'recharts';
 import { useState,useEffect } from 'react'
 import axios from 'axios'
 import './AccuracyChart.css'
+import RatingTiers from '../RatingTiers/RatingTiers';
 
 function CustomTooltip({ active, payload, label }) {
   if (active && payload && payload.length) {
@@ -16,6 +17,11 @@ function CustomTooltip({ active, payload, label }) {
   }
 
   return null;
+}
+
+const getColor = (rating) => {
+  const tier=RatingTiers.find(item => rating>=item.min && rating<=item.max)
+  return tier ? tier.color : '#00000017'
 }
 
 function AccuracyChart() {
@@ -50,8 +56,11 @@ function AccuracyChart() {
         cursor={{ fill: 'transparent' }}
       />
       <Legend />
-      <Bar dataKey="accuracy" fill="#4ba1beff" />
-
+      <Bar dataKey="accuracy">
+        {data.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={getColor(entry.rating)} />
+        ))}
+      </Bar>
     </BarChart>
     </div>
     
