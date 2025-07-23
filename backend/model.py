@@ -32,7 +32,7 @@ def extract_features(labeled_problems,submissions,user_rating):
         rating = problem.get("rating",0)
         
         for tag in problem.get("tags",[]):
-            if sub["verdict"]=="OK":
+            if sub.get("verdict", "") == "OK":
                 tag_stats[tag]["AC"]+=1
             else:
                 tag_stats[tag]["WA"]+=1 

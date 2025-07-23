@@ -30,7 +30,7 @@ def get_unsolved_problems(handle: str, submissions: List[Dict[str, Any]]) -> Lis
         solved_pids = {
             f"{sub['problem']['contestId']}-{sub['problem']['index']}"
             for sub in submissions
-            if sub.get("verdict") == "OK"  
+            if sub.get("verdict","") == "OK"  
         }
         
         response = requests.get("https://codeforces.com/api/problemset.problems")

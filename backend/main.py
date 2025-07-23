@@ -56,7 +56,7 @@ def label_problems(submissions):
             stats["tags"] = problem.get("tags",[])
             stats["rating"] = problem.get("rating",0)
             
-        if sub["verdict"]=="OK":
+        if sub.get("verdict", "") == "OK":
             stats["solved"]=True
             
         stats["attempts"]+=1
