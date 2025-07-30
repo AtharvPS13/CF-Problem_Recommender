@@ -1,9 +1,8 @@
-import React from 'react'
-import {BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,Legend,Cell} from 'recharts';
 import { useState,useEffect } from 'react'
-import axios from 'axios'
+import {BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,Legend,Cell} from 'recharts';
 import './AccuracyChart.css'
 import RatingTiers from '../RatingTiers/RatingTiers';
+import { fetchAccuracy } from '../../Services/api';
 
 function CustomTooltip({ active, payload, label }) {
   if (active && payload && payload.length) {
@@ -29,14 +28,14 @@ function AccuracyChart() {
   const [data,setData] = useState([])
 
   useEffect(()=>{
-    axios.get("https://cf-problem-recommender.onrender.com/api/rating-accuracy")
-      .then(response=>{
-        setData(response.data)
-        console.log("Accuracy", response.data); 
-      })
-      .catch(error =>{
-        console.error("Error Fetching rating accuracy",error)
-      })
+    const loadData = async () => {
+      const result = await fetchAccuracy()
+      if(result.success) {
+        setData(Array.isArray(result.rating_accuracy) ? result.rating_accuracy : []);
+        console.log("Accuracy:",result.rating_accuracy)
+      }
+    }
+    loadData();
   },[])
 
   return (
@@ -47,9 +46,7 @@ function AccuracyChart() {
       data={data}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis 
-        dataKey="rating"
-      />
+      <XAxis dataKey="rating"/>
       <YAxis domain={[0, 100]} />
       <Tooltip 
         content={<CustomTooltip />} 

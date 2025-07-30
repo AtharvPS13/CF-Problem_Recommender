@@ -1,0 +1,25 @@
+
+.containerHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px;
+}
+.links {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    margin-left: 40px;
+}
+.navLink {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    padding: 7px 5px;
+    display: inline-block;
+}
+.active-link {
+  background-color: rgb(196, 196, 196);
+  border: 3px solid black; 
+  border-radius: 10px;
+}

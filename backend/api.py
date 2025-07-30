@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import random
 
 global_rating_stats = {}
-
+global_tag_stats = {}
 
 app = FastAPI()
 
@@ -70,6 +70,9 @@ async def recommend_problems_endpoint(request: HandleRequest):
         
         global global_rating_stats
         global_rating_stats = rating_stats
+        
+        global global_tag_stats
+        global_tag_stats = tag_stats
 
 
         model = train_model(X, y)
@@ -105,13 +108,31 @@ async def recommend_problems_endpoint(request: HandleRequest):
 @app.get("/api/rating-accuracy")
 def get_rating_accuracy():
     if not global_rating_stats:
-        raise HTTPException(status_code=404, detail="No rating stats available. Call /recommend first.")
+        raise HTTPException(status_code=404, detail="No rating/tag stats available. Call /recommend first.")
 
     accuracy_of_ratings=[]
     for rating in sorted(global_rating_stats):
         accepted = global_rating_stats[rating]["AC"]           
         wrong = global_rating_stats[rating]["WA"]   
         accuracy = round((accepted /(accepted+wrong))*100)
-        accuracy_of_ratings.append({"rating":rating , "accuracy":accuracy,"accepted":accepted,"wrong":wrong})        
+        accuracy_of_ratings.append({"rating":rating , "accuracy":accuracy,"accepted":accepted,"wrong":wrong})    
+        
+    accuracy_of_tags = []
+    for tag in global_tag_stats:
+        accepted = global_tag_stats[tag]["AC"]
+        wrong = global_tag_stats[tag]["WA"]
+        accuracy = round((accepted /(accepted+wrong))*100) if (accepted + wrong) > 0 else 0
+        accuracy_of_tags.append({
+            "tag": tag,
+            "accuracy": accuracy,
+            "accepted": accepted,
+            "wrong": wrong,
+            "total": accepted + wrong
+        }) 
+        
+    accuracy_of_tags.sort(key=lambda x: x["total"], reverse=True)      
        
-    return accuracy_of_ratings   
+    return {
+        "rating_accuracy": accuracy_of_ratings,
+        "tag_accuracy": accuracy_of_tags[:10]
+    }
