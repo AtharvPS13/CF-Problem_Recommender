@@ -10,7 +10,7 @@ export const recommendProblems = async (handle) =>{
     }
     try {
         const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/recommend`,
+        `https://cf-problem-recommender.onrender.com/recommend`,
         { handle: handle.trim() },
         {
             headers: {
@@ -34,7 +34,7 @@ export const recommendProblems = async (handle) =>{
 
 export const fetchAccuracy = async () => {
     try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/rating-accuracy`);
+        const response = await axios.get(`https://cf-problem-recommender.onrender.com/api/rating-accuracy`);
 
         return {
             rating_accuracy : response.data.rating_accuracy,
