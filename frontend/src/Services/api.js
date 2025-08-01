@@ -9,8 +9,9 @@ export const recommendProblems = async (handle) =>{
         };
     }
     try {
+        const BASE_URL = "https://cf-problem-recommender.onrender.com";
         const response = await axios.post(
-        `https://cf-problem-recommender.onrender.com/recommend`,
+        `${BASE_URL}/recommend`,
         { handle: handle.trim() },
         {
             headers: {
