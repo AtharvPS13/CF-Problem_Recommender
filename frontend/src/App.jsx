@@ -4,6 +4,10 @@ import Problems from './pages/Problems/Problems'
 import Stats from './pages/Stats/Stats'
 import Header from './components/Header/Header'
 import { ProblemProvider } from './context/ProblemContext'
+import ReactGA from 'react-ga4';
+
+ReactGA.initialize("G-MGH431BN2M");
+ReactGA.send("pageview");
 
 
 function App() {
