@@ -9,8 +9,8 @@ export const recommendProblems = async (handle) =>{
         };
     }
     try {
-        // const BASE_URL = "https://cf-problem-recommender.onrender.com";
-        const BASE_URL = "http://127.0.0.1:8000";
+        const BASE_URL = "https://cf-problem-recommender.onrender.com";
+        // const BASE_URL = "http://127.0.0.1:8000";
         const response = await axios.post(
         `${BASE_URL}/recommend`,
         { handle: handle.trim() },
@@ -36,8 +36,8 @@ export const recommendProblems = async (handle) =>{
 
 export const fetchAccuracy = async () => {
     try {
-        // const BASE_URL = "https://cf-problem-recommender.onrender.com";
-        const BASE_URL = "http://127.0.0.1:8000";
+        const BASE_URL = "https://cf-problem-recommender.onrender.com";
+        // const BASE_URL = "http://127.0.0.1:8000";
         const response = await axios.get(
             `${BASE_URL}/api/rating-accuracy`);
 
@@ -57,8 +57,8 @@ export const fetchAccuracy = async () => {
 
 export const syncProblems = async (handle) => {
     try {
-        // const BASE_URL = "https://cf-problem-recommender.onrender.com";
-        const BASE_URL = "http://127.0.0.1:8000";
+        const BASE_URL = "https://cf-problem-recommender.onrender.com";
+        // const BASE_URL = "http://127.0.0.1:8000";
         const response = await axios.get(
             `${BASE_URL}/syncproblems`,
             {
