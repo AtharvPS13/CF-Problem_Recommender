@@ -27,9 +27,14 @@ def get_unsolved_problems(handle: str, submissions: List[Dict[str, Any]]) -> Lis
     try:
         user_rating = get_user_rating(handle)
         
+        url = f"https://codeforces.com/api/user.status?handle={handle}"
+        response = requests.get(url)
+        response.raise_for_status() 
+        totalSubmissions = response.json()["result"]
+        
         solved_pids = {
             f"{sub['problem']['contestId']}-{sub['problem']['index']}"
-            for sub in submissions
+            for sub in totalSubmissions
             if sub.get("verdict","") == "OK"  
         }
         
@@ -40,7 +45,7 @@ def get_unsolved_problems(handle: str, submissions: List[Dict[str, Any]]) -> Lis
         return [
             p for p in problems
             if (f"{p['contestId']}-{p['index']}" not in solved_pids and
-                user_rating - 300 <= p.get('rating', 0) <= user_rating + 350) and 
+                user_rating - 150 <= p.get('rating', 0) <= user_rating + 350) and 
                 p['contestId'] > 1350
         ]
         
@@ -89,7 +94,7 @@ async def recommend_problems_endpoint(request: HandleRequest):
             rating_stats=rating_stats
         )
         print(f"Generated {len(recommendations)} recommendations.")
-        random_recommendations = random.sample(recommendations, 12) if len(recommendations) >= 10 else recommendations
+        random_recommendations = random.sample(recommendations, 12) if len(recommendations) >= 12 else recommendations
 
         return {
             "handle": request.handle,
@@ -136,3 +141,25 @@ def get_rating_accuracy():
         "rating_accuracy": accuracy_of_ratings,
         "tag_accuracy": accuracy_of_tags[:10]
     }
+    
+from fastapi import Query
+
+@app.get("/syncproblems")
+def solved_problems(handle: str = Query(...)):
+    try:
+        url = f"https://codeforces.com/api/user.status?handle={handle}"
+        response = requests.get(url)
+        response.raise_for_status()
+        submissions = response.json()["result"]
+        
+        solved_pids = {
+            f"{sub['problem']['contestId']}-{sub['problem']['index']}"
+            for sub in submissions
+            if sub.get("verdict") == "OK"
+        }
+        print("Successfully fetched api")
+        
+        return {"solved_pids": list(solved_pids)}  # Wrap in dict
+    except Exception as e:
+        print("Unhandled error:", e)
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")

@@ -9,7 +9,8 @@ export const recommendProblems = async (handle) =>{
         };
     }
     try {
-        const BASE_URL = "https://cf-problem-recommender.onrender.com";
+        // const BASE_URL = "https://cf-problem-recommender.onrender.com";
+        const BASE_URL = "http://127.0.0.1:8000";
         const response = await axios.post(
         `${BASE_URL}/recommend`,
         { handle: handle.trim() },
@@ -35,7 +36,10 @@ export const recommendProblems = async (handle) =>{
 
 export const fetchAccuracy = async () => {
     try {
-        const response = await axios.get(`https://cf-problem-recommender.onrender.com/api/rating-accuracy`);
+        // const BASE_URL = "https://cf-problem-recommender.onrender.com";
+        const BASE_URL = "http://127.0.0.1:8000";
+        const response = await axios.get(
+            `${BASE_URL}/api/rating-accuracy`);
 
         return {
             rating_accuracy : response.data.rating_accuracy,
@@ -49,4 +53,33 @@ export const fetchAccuracy = async () => {
             error: error.message
         };  
      }
+};
+
+export const syncProblems = async (handle) => {
+    try {
+        // const BASE_URL = "https://cf-problem-recommender.onrender.com";
+        const BASE_URL = "http://127.0.0.1:8000";
+        const response = await axios.get(
+            `${BASE_URL}/syncproblems`,
+            {
+                params: { 
+                    handle: handle.trim()
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        return {
+            solved_prob: response.data.solved_pids,
+            success: true
+        };
+    } catch(error) {
+        console.error("Error fetching solved problems", error);
+        return {
+            success: false,
+            error: error.message
+        };  
+    }
 };

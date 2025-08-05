@@ -1,6 +1,6 @@
 import { useContext, useState,useEffect } from 'react'
 import './Problems.css'
-import { recommendProblems } from '../../Services/api';
+import { recommendProblems, syncProblems } from '../../Services/api';
 import { ProblemContext } from '../../context/ProblemContext';
 
 function Problems() {
@@ -10,6 +10,31 @@ function Problems() {
   const [loading , setLoading]=useState(false)
   const [activeCircles, setActiveCircles] =useState([])
   const { updateProblems, getProblems } = useContext(ProblemContext)
+
+  const syncproblems = async() =>{
+
+    setLoading(true)
+    const result = await syncProblems(Handle)
+
+    if(result.success) {
+      if (!Handle) return alert("Enter a Codeforces handle first!");
+
+      const solvedPids = result.solved_prob;
+
+      const updatedCircles = problems.map((p, idx) => {
+        const pid = `${p.contestId}-${p.index}`;
+        return solvedPids.includes(pid) ? true : activeCircles[idx];
+      });
+
+      setActiveCircles(updatedCircles);
+      console.log(`Synced ${solvedPids.length} solved problems!`);
+      
+    } else {
+      alert("Failed to sync");
+      
+    }
+    setLoading(false)
+  }
   
   useEffect(() => {
     if(Handle) {
@@ -83,6 +108,9 @@ function Problems() {
       
       {loading && <p className='loading'>Loading....</p>}
 
+      {!loading && 
+        <button className='sync-btn' onClick={syncproblems}>Sync Problems</button>
+      }
       <ul className='problems-list'>
         {problems.map((p, idx) => (
           <li key={idx} className='problem-card'>

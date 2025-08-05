@@ -84,6 +84,20 @@ img {
   color: #6b7280;
   margin-top: 0.4rem;
 }
+.sync-btn {
+  margin-left: 77.5%;
+  padding: 0.5rem ;
+  font-size: 1rem;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.sync-btn:hover {
+  background-color: #4f46e5;
+}
 
 .loading {
   display: flex;
