@@ -18,12 +18,12 @@ function Header() {
               Problems
             </NavLink>
             <NavLink 
-              to="/stats" 
+              to="/notes" 
               className={({ isActive }) =>
                 isActive ? "navLink active-link" : "navLink"
               }
             >
-              Stats
+              Notes
             </NavLink>
           </div>
         </div>

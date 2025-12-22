@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 import Problems from './pages/Problems/Problems'
 import Stats from './pages/Stats/Stats'
+import Notes from './pages/ProblemsNotes/Notes'
 import Header from './components/Header/Header'
 import { ProblemProvider } from './context/ProblemContext'
 import ReactGA from 'react-ga4';
@@ -18,6 +19,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Problems />} />
+          <Route path="/notes" element={<Notes />} />
           <Route path="/stats" element={<Stats />} />
         </Routes>
       </Router>

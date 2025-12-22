@@ -1,0 +1,240 @@
+.notes-page {
+  max-width: 960px;
+  margin: 2.5rem auto;
+  padding: 1.75rem 1.5rem 2.5rem;
+  background-color: #020617;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.8);
+  border: 1px solid #111827;
+  color: #e5e7eb;
+  box-sizing: border-box;
+}
+
+.notes-header {
+  margin-bottom: 1.75rem;
+  text-align: left;
+}
+
+.notes-title {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #f9fafb;
+  letter-spacing: 0.02em;
+}
+
+.notes-subtitle {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.notes-section {
+  margin-top: 2rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(31, 41, 55, 0.9);
+}
+
+.notes-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.notes-section-title {
+  margin: 0;
+  font-size: 1.15rem;
+  color: #e5e7eb;
+  letter-spacing: 0.015em;
+}
+
+.notes-input-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.notes-input {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  border-radius: 7px;
+  border: 1px solid #4b5563;
+  background-color: #020617;
+  color: #e5e7eb;
+  font-size: 0.95rem;
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.6);
+}
+
+.notes-input::placeholder {
+  color: #6b7280;
+}
+
+.notes-input:focus {
+  border-color: #6b7280;
+  box-shadow: none;
+}
+
+.notes-add-btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background-color: #3b82f6;
+  color: #f9fafb;
+  box-shadow: none;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.notes-add-btn:hover {
+  background-color: #2563eb;
+}
+
+.notes-add-btn:active {
+  background-color: #1d4ed8;
+}
+
+.notes-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notes-item {
+  background-color: #020617;
+  border-radius: 10px;
+  padding: 0.85rem 0.85rem 0.65rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #1f2933;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.notes-item:hover {
+  background-color: #02041b;
+  border-color: #374151;
+}
+
+.notes-item-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.notes-problem-id {
+  font-weight: 600;
+  color: #e5e7eb;
+  letter-spacing: 0.01em;
+  font-size: 0.98rem;
+}
+
+.notes-problem-link {
+  text-decoration: none;
+  position: relative;
+}
+
+.notes-problem-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: #6366f1;
+  opacity: 0;
+  transform: scaleX(0.85);
+  transform-origin: left;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.notes-problem-link:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.notes-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.icon-btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid #4b5563;
+  background-color: #020617;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+  padding: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.icon-btn:hover {
+  background-color: #111827;
+  border-color: #6b7280;
+}
+
+.notes-icon:hover {
+  background-color: #1f2937;
+  border-color: #3b82f6;
+}
+
+.delete-icon {
+  color: #fecaca;
+}
+
+.delete-icon:hover {
+  background-color: #1f2937;
+  border-color: #ef4444;
+}
+
+.notes-textarea {
+  width: 100%;
+  margin-top: 0.65rem;
+  border-radius: 8px;
+  border: 1px solid #4b5563;
+  background-color: #020617;
+  color: #e5e7eb;
+  padding: 0.6rem 0.7rem;
+  font-size: 0.92rem;
+  min-height: 70px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.notes-textarea::placeholder {
+  color: #6b7280;
+}
+
+.notes-textarea:focus {
+  outline: none;
+  border-color: #6b7280;
+  box-shadow: none;
+}
+
+@media (max-width: 640px) {
+  .notes-page {
+    margin: 1.5rem 0.75rem 2rem;
+    padding: 1.25rem 1rem 1.75rem;
+  }
+
+  .notes-item-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .notes-actions {
+    align-self: flex-end;
+  }
+}
