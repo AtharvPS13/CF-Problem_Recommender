@@ -108,7 +108,7 @@ function Problems() {
       
       {loading && <p className='loading'>Loading....</p>}
 
-      {!loading && 
+      {!loading && problems.length>0 &&
         <button className='sync-btn' onClick={syncproblems}>Sync Problems</button>
       }
       <ul className='problems-list'>
