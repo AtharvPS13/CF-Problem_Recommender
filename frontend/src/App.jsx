@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 import Problems from './pages/Problems/Problems'
 import Stats from './pages/Stats/Stats'
+import Stats2 from './pages/Stats2/Stats2'
 import Notes from './pages/ProblemsNotes/Notes'
 import Header from './components/Header/Header'
 import { ProblemProvider } from './context/ProblemContext'
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Problems />} />
           <Route path="/notes" element={<Notes />} />
           <Route path="/stats" element={<Stats />} />
+          <Route path="/stats2" element={<Stats2 />} />
         </Routes>
       </Router>
     </ProblemProvider>

@@ -1,0 +1,112 @@
+.stats2-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.stats2-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.stats2-title {
+  font-size: 1.8rem;
+  color: #f9fafb;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.stats2-subtitle {
+  color: #9ca3af;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.stats2-loading,
+.stats2-error,
+.stats2-empty {
+  text-align: center;
+  padding: 2rem;
+  color: #e5e7eb;
+}
+
+.stats2-error {
+  color: #f87171;
+}
+
+.stats2-retry-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #3b82f6;
+  color: #f9fafb;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.stats2-retry-btn:hover {
+  background-color: #2563eb;
+}
+
+.stats2-retry-btn:active {
+  background-color: #1d4ed8;
+}
+
+.stats2-charts {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.stats2-chart-card {
+  background-color: #020617;
+  border: 1px solid #1f2933;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.15s ease;
+}
+
+.stats2-chart-card:hover {
+  border-color: #374151;
+}
+
+.stats2-chart-title {
+  font-size: 1.2rem;
+  color: #e5e7eb;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Recharts customization for dark theme */
+.recharts-wrapper {
+  color: #e5e7eb;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: #9ca3af !important;
+}
+
+.recharts-legend-item-text {
+  color: #e5e7eb !important;
+}
+
+@media (max-width: 768px) {
+  .stats2-container {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+
+  .stats2-title {
+    font-size: 1.5rem;
+  }
+
+  .stats2-chart-card {
+    padding: 1rem;
+  }
+}
+

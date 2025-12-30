@@ -6,6 +6,7 @@ from main import get_user_submissions, get_user_rating, label_problems
 from model import extract_features, train_model, recommend_problems 
 from fastapi.middleware.cors import CORSMiddleware
 import random
+from collections import Counter, defaultdict
 
 global_rating_stats = {}
 global_tag_stats = {}
@@ -162,4 +163,84 @@ def solved_problems(handle: str = Query(...)):
         return {"solved_pids": list(solved_pids)}  # Wrap in dict
     except Exception as e:
         print("Unhandled error:", e)
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+
+# Rating buckets: (label, lower_bound_inclusive, upper_bound_exclusive)
+RATING_BUCKETS = [
+    ("0-1000", 0, 1000),
+    ("1000-1300", 1000, 1300),
+    ("1300-1600", 1300, 1600),
+    ("1600-1900", 1600, 1900),
+    ("1900-2100", 1900, 2101),  # 2100 inclusive
+]
+
+def get_bucket_label(rating: int):
+    """Return the label of the bucket that rating belongs to, or None if outside."""
+    if rating is None:
+        return None
+    for label, lo, hi in RATING_BUCKETS:
+        if lo <= rating < hi:
+            return label
+    return None
+
+def build_tag_frequencies_by_bucket(problems):
+    """
+    Given a list of problems from the API, return:
+        bucket_to_tag_counter: dict[label -> Counter(tag -> freq)]
+    """
+    bucket_to_tag_counter: Dict[str, Counter] = defaultdict(Counter)
+
+    for p in problems:
+        rating = p.get("rating")
+        tags = p.get("tags", [])
+        bucket_label = get_bucket_label(rating)
+        if bucket_label is None:
+            continue  # skip problems outside buckets or without rating
+
+        for t in tags:
+            bucket_to_tag_counter[bucket_label][t] += 1
+
+    return bucket_to_tag_counter
+
+@app.get("/api/tag-stats")
+def get_tag_statistics(top_n: int = 15):
+    """
+    Fetches problems from Codeforces API and returns tag frequencies by rating bucket.
+    """
+    try:
+        BASE_URL = "https://codeforces.com/api/problemset.problems"
+        resp = requests.get(BASE_URL)
+        resp.raise_for_status()
+        data = resp.json()
+
+        if data.get("status") != "OK":
+            raise HTTPException(status_code=500, detail=f"Codeforces API error: {data}")
+
+        problems = data["result"]["problems"]
+        print(f"Fetched {len(problems)} problems from Codeforces API")
+
+        bucket_to_tag_counter = build_tag_frequencies_by_bucket(problems)
+
+        # Convert to response format
+        result = {}
+        for bucket_label, counter in bucket_to_tag_counter.items():
+            if not counter:
+                continue
+            
+            # Take top N tags
+            most_common = counter.most_common(top_n)
+            result[bucket_label] = {
+                "tags": [t for t, _ in most_common],
+                "frequencies": [f for _, f in most_common]
+            }
+
+        return {
+            "success": True,
+            "data": result,
+            "total_problems": len(problems)
+        }
+
+    except Exception as e:
+        print(f"Error in get_tag_statistics: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")

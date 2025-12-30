@@ -83,3 +83,33 @@ export const syncProblems = async (handle) => {
         };  
     }
 };
+
+export const fetchTagStatistics = async (topN = 15) => {
+    try {
+        const BASE_URL = "https://cf-problem-recommender.onrender.com";
+        // const BASE_URL = "http://127.0.0.1:8000";
+        const response = await axios.get(
+            `${BASE_URL}/api/tag-stats`,
+            {
+                params: { 
+                    top_n: topN
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        return {
+            success: true,
+            data: response.data.data,
+            totalProblems: response.data.total_problems
+        };
+    } catch(error) {
+        console.error("Error fetching tag statistics", error);
+        return {
+            success: false,
+            error: error.message
+        };  
+    }
+};
